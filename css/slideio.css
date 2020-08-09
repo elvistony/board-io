@@ -1,0 +1,73 @@
+.box{
+  padding:10px;
+  background-color: blue;
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+}
+
+.elipse{
+  padding:10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: blue;
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.f-top-right{
+  position: absolute;
+  top: 0;
+  right:0;
+  cursor:ne-resize;
+}
+
+.f-top-left{
+  position: absolute;
+  top: 0;
+  left:0;
+  cursor:nw-resize;
+}
+
+.f-top{
+  position: absolute;
+  top: 0;
+  right:50%;
+  cursor:n-resize;
+}
+
+.f-right{
+  position: absolute;
+  top: 30%;
+  right:0;
+  cursor:e-resize;
+}
+
+.f-left{
+  position: absolute;
+  top: 30%;
+  left:0;
+  cursor:e-resize;
+}
+
+.f-bottom-right{
+  position: absolute;
+  bottom: 0;
+  right:0;
+  cursor:se-resize;
+}
+
+.f-bottom-left{
+  position: absolute;
+  bottom: 0;
+  left:0;
+  cursor:sw-resize;
+}
+.f-bottom{
+  position: absolute;
+  bottom: 0;
+  right:50%;
+  cursor:s-resize;
+}

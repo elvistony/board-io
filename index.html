@@ -1,0 +1,57 @@
+<html>
+<title>RW - Kollab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="p2p canvas html5 simple-peer subin p2pt elvis">
+<meta name="description" content="A simple ">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<body>
+<header class="w3-panel w3-top">
+  <div class="">
+    <div class="w3-border w3-block">
+      <span class="w3-button w3-hover-white w3-small">Board-IO</span>
+      <span class="w3-button w3-right w3-hover-white">Room Code: <span class="w3-large">ABCDEFG</span></span>
+    </div>
+  </div>
+</header>
+
+
+
+<nav class=" w3-animate-right w3-rounded" id="mySidebar">
+  <a href="javascript:void(0)" onclick="closeNav()" class="w3-button w3-black w3-xxxlarge w3-display-topright" style="padding:0 12px;">
+    <i class="fa fa-remove"></i>
+  </a>
+</nav>
+
+<div class="w3-padding-top w3-content" style="max-width:1500px;margin:-10px;">
+  <div class="w3-row-padding">
+      <div class="w3-white w3-block" height=1000 id="drawScreen">
+        <canvas id="canvas" width="1000" height="500"></canvas>
+      </div>
+      <span class="w3-panel w3-block w3-center w3-white" style="text-align:center;">
+      </span>
+  </div>
+</div>
+
+<div class="w3-bar-block w3-center">
+  <button class="w3-button " onclick="clearCanvas()">Clear All</button>
+  <button class="w3-button w3-border w3-white" onclick="LineColor='white';"></button>
+  <button class="w3-button w3-border w3-gray" onclick="LineColor='grey';"></button>
+  <button class="w3-button w3-border w3-black" onclick="LineColor='black';"></button>
+  <button class="w3-button w3-border w3-red" onclick="LineColor='red';"></button>
+  <button class="w3-button w3-border w3-pink" onclick="LineColor='magenta';"></button>
+  <button class="w3-button w3-border w3-purple" onclick="LineColor='purple';"></button>
+  <button class="w3-button w3-border w3-blue" onclick="LineColor='blue';"></button>
+  <button class="w3-button w3-border w3-green" onclick="LineColor='green';"></button>
+  <button class="w3-button w3-border w3-yellow" onclick="LineColor='yellow';"></button>
+  <button class="w3-button " onclick="LineColor='black';">Eraser</button>
+  Tip Size: <input type="number" class="" id="tipSize" value="2">
+</div>
+
+<footer class="w3-container w3-small w3-center w3-opacity" id="footer">
+  <p>Styled by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-round-large w3-small w3-button w3-green">w3.css</a> and Powered by <a href="../" class="w3-button w3-small w3-orange w3-round-large" name="button">RW-Dev</a> </p>
+</footer>
+
+<script src="js/slideio.js" charset="utf-8"></script>
+</body>
+</html>

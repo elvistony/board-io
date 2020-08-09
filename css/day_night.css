@@ -1,0 +1,18 @@
+body,h1 {font-family: "Raleway", Arial, sans-serif}
+.dark{
+    background-color:darkslategray;
+    color:white;
+}
+.darkBar{
+  background-color:darkslategray;
+  opacity:1;
+}
+
+.darkInput{
+  background-color:#0f1b1b;
+  color:white;
+}
+
+.darkOutput{
+  background-color:#0f1b1b;
+}
