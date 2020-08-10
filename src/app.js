@@ -2,33 +2,81 @@ const P2PT = require('p2pt')
 const rs = require('randomstring')
 
 var room= 'homeroom'
-var username= prompt("Enter a Nickname", "Jack")
+var username= 'Anu'
 var peers = {}
 
+var IntroModal = document.getElementById('intro-modal')
 var playerDiv = document.getElementById('players')
 var solo=true
 
+IntroModal.style.display='block'
+
 var Debug=true;
 
+window.onbeforeunload = function(event) {
+    event.returnValue = "Your Board will be Cleared if you Reload, Continue?";
+};
+
 //----------------------------------------------Checking if Site is First Launch
-var unique_id = getCookie('unique_id')
-if(unique_id==""){
-    dlog("First Launch - Generating ID")
-    var new_id =  rs.generate(10)
-    unique_id=new_id;
-    setCookie('unique_id',new_id, 7)
-    dlog("Unique ID = "+new_id)
-}else{
-    alert('Welcome Back '+unique_id)
-    dlog("Unique ID already Exists : "+unique_id)
+// var unique_id = getCookie('unique_id')
+// if(unique_id==""){
+//     dlog("First Launch - Generating ID")
+//     var new_id =  rs.generate(10)
+//     unique_id=new_id;
+//     setCookie('unique_id',new_id, 7)
+//     dlog("Unique ID = "+new_id)
+// }else{
+//     alert('Welcome Back '+unique_id)
+//     dlog("Unique ID already Exists : "+unique_id)
+// }
+
+document.getElementById('joinRoom').addEventListener('click',joinRoom)
+document.getElementById('genRoomCode').addEventListener('click',NewRoom)
+document.getElementById('ModalOpen').addEventListener('click',openModal)
+document.getElementById('copyCode').addEventListener('click',copyCode)
+
+
+
+// Primary Functions
+function NewRoom() {
+    var nick = document.getElementById('newRoomNick').value
+    username=nick
+    if(nick.trim() === ''){
+        alert('Enter Nickname')
+    }else{
+        room=rs.generate(9)
+        document.getElementById('genRoomCode').style.display='none';
+        document.getElementById('newRoomCode').value=room
+        document.getElementById('DispRoom').innerText=room
+        joinChat()
+    }
 }
 
-// // Primary Functions
-// function NewRoom() {
-//     //Generate Meeting ID 
-//     room.value=rs.generate(9)
-//     //var hostSecret = CreateKey()
-// }
+function openModal(){
+    IntroModal.style.display='block'
+    openPage('pg1')
+}
+
+function copyCode() {
+    var copyText = document.getElementById("newRoomCode");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    document.execCommand("copy");
+}
+
+function joinRoom(){
+    var uname = document.getElementById('joinNick').value
+    var rcode = document.getElementById('joinRoomCode').value
+    if(rcode.trim() === '' || uname.trim() === ''){
+        alert("Room Code or Nickname Empty")
+    }else{
+        room = rcode
+        document.getElementById('DispRoom').innerText=rcode
+        joinChat()
+    }
+    username=uname
+    IntroModal.style.display='none';
+}
 
 //----------------------------------------------
 
@@ -59,10 +107,7 @@ if(unique_id==""){
 //     room.value = hashcode.substring(1,hashcode.length)
 // }
 
-var logo = document.getElementById('logo')
 var members={}
-
-logo.addEventListener('click',joinChat)
 
 function joinChat () {
     var uname = username
@@ -173,28 +218,28 @@ function dlog(msg) {
     }
 }
 
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
+// function setCookie(cname, cvalue, exdays) {
+//     var d = new Date();
+//     d.setTime(d.getTime() + (exdays*24*60*60*1000));
+//     var expires = "expires="+ d.toUTCString();
+//     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+// }
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-    }
-    }
-    return "";
-}
+// function getCookie(cname) {
+//     var name = cname + "=";
+//     var decodedCookie = decodeURIComponent(document.cookie);
+//     var ca = decodedCookie.split(';');
+//     for(var i = 0; i < ca.length; i++) {
+//     var c = ca[i];
+//     while (c.charAt(0) == ' ') {
+//         c = c.substring(1);
+//     }
+//     if (c.indexOf(name) == 0) {
+//         return c.substring(name.length, c.length);
+//     }
+//     }
+//     return "";
+// }
 
 
 //Draw.js ---- Expansion
@@ -267,7 +312,7 @@ function resize(){
 
 function addPeer(id) {
     addPeerBrush(id)
-    playerDiv.innerHTML+=`<span> &#9679; `+members[id]+`</span>`
+    playerDiv.innerHTML+=`<span class="w3-text-orange"> &#9679; `+members[id]+`</span>`
 }
 
 

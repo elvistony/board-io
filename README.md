@@ -5,6 +5,7 @@
 ### Features
 - Super Simple connection *
 - No Server Required
+- Create Rooms and Join Them Easily
 
 ### Known Issues
 - Make Standard Canvas sizes for all devices
