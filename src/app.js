@@ -35,6 +35,12 @@ document.getElementById('genRoomCode').addEventListener('click',NewRoom)
 document.getElementById('ModalOpen').addEventListener('click',openModal)
 document.getElementById('copyCode').addEventListener('click',copyCode)
 
+document.getElementById('clearAll').addEventListener('click',function(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);   
+})
+document.getElementById('tipSize').addEventListener('change',function(){
+    setBrushThick(this.value)
+})
 
 
 // Primary Functions
@@ -62,6 +68,15 @@ function copyCode() {
     copyText.select();
     copyText.setSelectionRange(0, 99999); /*For mobile devices*/
     document.execCommand("copy");
+}
+
+var colors = document.getElementsByClassName('colorPallete')
+for (const color of colors) {
+    color.addEventListener('click',function (){
+        var clr = this.getAttribute("value");
+        console.log(clr);
+        setBrushColor(clr)
+    })
 }
 
 function joinRoom(){
@@ -177,6 +192,7 @@ function listen () {
     })
     p2pt.on('peerclose', (peer) => {
         console.log(peer.id+" disconnected");
+        document.getElementById(peer.id).outerHTML=""
         delete peers[peer.id]
         delete members[peer.id]
     })
@@ -254,8 +270,10 @@ function setBrushColor(color) {
     }
 }
 
+
+
 function setBrushThick(me) {
-    my_brushThickness=me.value
+    my_brushThickness=me
     SendMyBrushChange()
 }
 
@@ -312,7 +330,7 @@ function resize(){
 
 function addPeer(id) {
     addPeerBrush(id)
-    playerDiv.innerHTML+=`<span class="w3-text-orange"> &#9679; `+members[id]+`</span>`
+    playerDiv.innerHTML+=`<span class="w3-text-orange" id="`+id+`"> &#9679; `+members[id]+`</span>`
 }
 
 
@@ -353,7 +371,7 @@ function myStrokes(event) {
     event.preventDefault();
     event.stopPropagation();
     if(my_brush){
-        drawMyStroke(2,'round','blue',event)
+        drawMyStroke(my_brushThickness,'round',my_brushColor,event)
         if(!solo){
             //send strokes too
             SendMoves()

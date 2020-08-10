@@ -21,27 +21,27 @@
 <div class="w3-padding-top w3-content" style="max-width:1500px;margin:-10px;">
   <div class="w3-row-padding">
       <div class="w3-white w3-block" height=1000 id="drawScreen">
-        <canvas id="canvas" width="1000" height="500"></canvas>
+        <canvas id="canvas" width="1000" height="600"></canvas>
       </div>
       <span class="w3-panel w3-block w3-center w3-white" style="text-align:center;">
       </span>
   </div>
 </div>
 
-<!-- <div class="w3-bar-block w3-center">
-  <button class="w3-button " onclick="clearCanvas()">Clear All</button>
-  <button class="w3-button w3-border w3-white" onclick="setBrushColor('white')"></button>
-  <button class="w3-button w3-border w3-gray" onclick="setBrushColor('gray')"></button>
-  <button class="w3-button w3-border w3-black" onclick="setBrushColor('black')"></button>
-  <button class="w3-button w3-border w3-red" onclick="setBrushColor('red')"></button>
-  <button class="w3-button w3-border w3-pink" onclick="setBrushColor('magenta')"></button>
-  <button class="w3-button w3-border w3-purple" onclick="setBrushColor('purple')"></button>
-  <button class="w3-button w3-border w3-blue" onclick="setBrushColor('blue')"></button>
-  <button class="w3-button w3-border w3-green" onclick="setBrushColor('green')"></button>
-  <button class="w3-button w3-border w3-yellow" onclick="setBrushColor('yello')"></button>
-  <button class="w3-button " onclick="setBrushColor('white')">Eraser</button>
-  Tip Size: <input type="number" class="" id="tipSize" value="2" onchange="setBrushThick(this)">
-</div> -->
+<div class="w3-block w3-center">
+  <button class="w3-button w3-border w3-white colorPallete" value="white"></button>
+  <button class="w3-button w3-border w3-gray colorPallete" value="gray" ></button>
+  <button class="w3-button w3-border w3-black colorPallete" value="black"></button>
+  <button class="w3-button w3-border w3-red colorPallete" value="red"></button>
+  <button class="w3-button w3-border w3-pink colorPallete" value="pink"></button>
+  <button class="w3-button w3-border w3-purple colorPallete" value="purple"></button>
+  <button class="w3-button w3-border w3-blue colorPallete" value="blue"></button>
+  <button class="w3-button w3-border w3-green colorPallete" value="green"></button>
+  <button class="w3-button w3-border w3-yellow colorPallete" value="yellow"></button>
+  <br>
+  <button class="w3-button" id="clearAll" onclick="">Erase My Screen</button>
+  Tip Size: <input type="number" style="width:50px;" id="tipSize" value="2"  onchange="setBrushThick(this)">
+</div>
 
 <!-- The Modal -->
 <div id="intro-modal" class="w3-modal" >
@@ -110,6 +110,9 @@
     }
     document.getElementById(page).style.display = "block";  
   }
+
+
+
 </script>
 
 </body>
