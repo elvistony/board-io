@@ -25,9 +25,11 @@
   },
   "homepage": "https://github.com/elvistony/board-io#readme",
   "dependencies": {
-    "p2pt": "^1.4.1"
+    "p2pt": "^1.4.1",
+    "randomstring": "^1.1.5"
   },
   "devDependencies": {
-    "webpack": "^4.44.1"
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }

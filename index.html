@@ -9,8 +9,9 @@
 <header class="w3-panel w3-top">
   <div class="">
     <div class="w3-border w3-block">
-      <span class="w3-button w3-hover-white w3-small">Board-IO</span>
-      <span class="w3-button w3-right w3-hover-white">Room Code: <span class="w3-large">ABCDEFG</span></span>
+      <span class="w3-button w3-hover-white w3-small" id="logo">Board-IO</span>
+      <span class="w3-display-middle" id="players"><span class="w3-text-orange">&#9679; You  </span></span>
+      <span class="w3-button w3-right w3-hover-white">Room Code: <span class="w3-large">homeroom</span></span>
     </div>
   </div>
 </header>
@@ -33,25 +34,28 @@
   </div>
 </div>
 
-<div class="w3-bar-block w3-center">
+<!-- <div class="w3-bar-block w3-center">
   <button class="w3-button " onclick="clearCanvas()">Clear All</button>
-  <button class="w3-button w3-border w3-white" onclick="LineColor='white';"></button>
-  <button class="w3-button w3-border w3-gray" onclick="LineColor='grey';"></button>
-  <button class="w3-button w3-border w3-black" onclick="LineColor='black';"></button>
-  <button class="w3-button w3-border w3-red" onclick="LineColor='red';"></button>
-  <button class="w3-button w3-border w3-pink" onclick="LineColor='magenta';"></button>
-  <button class="w3-button w3-border w3-purple" onclick="LineColor='purple';"></button>
-  <button class="w3-button w3-border w3-blue" onclick="LineColor='blue';"></button>
-  <button class="w3-button w3-border w3-green" onclick="LineColor='green';"></button>
-  <button class="w3-button w3-border w3-yellow" onclick="LineColor='yellow';"></button>
-  <button class="w3-button " onclick="LineColor='black';">Eraser</button>
-  Tip Size: <input type="number" class="" id="tipSize" value="2">
-</div>
+  <button class="w3-button w3-border w3-white" onclick="setBrushColor('white')"></button>
+  <button class="w3-button w3-border w3-gray" onclick="setBrushColor('gray')"></button>
+  <button class="w3-button w3-border w3-black" onclick="setBrushColor('black')"></button>
+  <button class="w3-button w3-border w3-red" onclick="setBrushColor('red')"></button>
+  <button class="w3-button w3-border w3-pink" onclick="setBrushColor('magenta')"></button>
+  <button class="w3-button w3-border w3-purple" onclick="setBrushColor('purple')"></button>
+  <button class="w3-button w3-border w3-blue" onclick="setBrushColor('blue')"></button>
+  <button class="w3-button w3-border w3-green" onclick="setBrushColor('green')"></button>
+  <button class="w3-button w3-border w3-yellow" onclick="setBrushColor('yello')"></button>
+  <button class="w3-button " onclick="setBrushColor('white')">Eraser</button>
+  Tip Size: <input type="number" class="" id="tipSize" value="2" onchange="setBrushThick(this)">
+</div> -->
+
 
 <footer class="w3-container w3-small w3-center w3-opacity" id="footer">
-  <p>Styled by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-round-large w3-small w3-button w3-green">w3.css</a> and Powered by <a href="../" class="w3-button w3-small w3-orange w3-round-large" name="button">RW-Dev</a> </p>
+  <p>Styled by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-round-large w3-small w3-button w3-green">w3.css</a> and Developed by <a href="../" class="w3-button w3-small w3-orange w3-round-large" name="button">RW-Dev</a> </p>
+  <p class="w3-small"> Powered by <a href="https://github.com/subin2000/p2pt" target="_blank" class="w3-round-large w3-small w3-button w3-light-gray">P2PT</a></p>
 </footer>
 
-<script src="js/slideio.js" charset="utf-8"></script>
+<script src="build/app.bundle.js" charset="utf-8"></script>
+<script src="build/vendor.js" charset="utf-8"></script>
 </body>
 </html>
