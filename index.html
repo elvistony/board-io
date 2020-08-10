@@ -12,7 +12,7 @@
     <div class="w3-border w3-block">
       <span class="w3-button w3-hover-white w3-small" id="logo">Board-IO</span>
       <span class="w3-display-middle" id="players"><span class="w3-text-blue">&#9679; You  </span></span>
-      <span class="w3-button w3-right w3-small w3-text-blue" id="DispRoom"><span id="ModalOpen" class="w3-button">New Room</span></span>
+      <span class="w3-button w3-right w3-small w3-text-blue" id="DispRoom"><span id="ModalOpen" class="w3-text-orange">New Room</span></span>
     </div>
   </div>
 </header>
@@ -44,21 +44,24 @@
 </div> -->
 
 <!-- The Modal -->
-<div id="intro-modal" class="w3-modal ">
-  <div class="w3-modal-content w3-display-middle w3-padding  w3-round-large">
-    <div class="w3-container w3-center w3-padding">
+<div id="intro-modal" class="w3-modal" >
+  <div class="w3-modal-content w3-display-middle w3-padding  w3-round-large" style="width: 70% !important;margin-left: 0px !important;" >
+    <div class="w3-center">
       <div id="pg1" class="w3-container w3-animate-fade pages" >
         <span onclick="CloseModal()" class="w3-button w3-round w3-margin w3-orange w3-display-topright">&times;</span>
         <h3>Select Mode</h3>
-        <button class="w3-button w3-pale-blue w3-text-orange w3-round-large w3-hover-blue" onclick="CloseModal()"><i class="fa fa-user" style="font-size: 80 !important;"></i><br>Self Mode</button>
-        <button  class="w3-button w3-pale-red w3-text-orange w3-round-large w3-hover-red" onclick="openPage('pg2')"><i class="fa fa-users" style="font-size: 80 !important;"></i><br>Friend Mode</button>  
+        <div class="w3-row">
+          <button class="w3-half w3-button w3-pale-blue w3-text-orange w3-round-large w3-hover-blue" onclick="CloseModal()"><i class="fa fa-user" style="font-size: 60 !important;"></i><br>Self Mode</button>
+          <button class="w3-half w3-button w3-pale-red w3-text-orange w3-round-large w3-hover-red" onclick="openPage('pg2')"><i class="fa fa-users" style="font-size: 60 !important;"></i><br>Friend Mode</button>    
+        </div>
       </div>
       <div id="pg2"  class="w3-container w3-animate-fade pages" style="display:none">
         <span onclick="openPage('pg1')" class="w3-button w3-round w3-margin w3-orange w3-display-topleft"><i class="fa fa-caret-left"></i></span>
         <h3>Web Mode</h3>
-        <button class="w3-button w3-pale-blue w3-text-orange w3-round-large w3-hover-blue" onclick="openPage('pg3')"><i class="fa fa-sign-in" style="font-size: 80 !important;"></i><br>Join</button>
-        <button class="w3-button w3-pale-red w3-text-orange w3-round-large w3-hover-red" onclick="openPage('pg4')"><i class="fa fa-plus-circle" style="font-size: 80 !important;"></i><br>Make New Room</button> 
-         
+        <div class="w3-row">
+          <button class="w3-half w3-button w3-pale-blue w3-text-orange w3-round-large w3-hover-blue" onclick="openPage('pg3')"><i class="fa fa-sign-in" style="font-size: 60 !important;"></i><br>Join</button>
+          <button class="w3-half w3-button w3-pale-red w3-text-orange w3-round-large w3-hover-red" onclick="openPage('pg4')"><i class="fa fa-plus-circle" style="font-size: 60 !important;"></i><br>Make New Room</button> 
+        </div>
       </div>
       <div id="pg3" class="w3-container w3-animate-fade pages" style="display:none">
         <span onclick="openPage('pg2')" class="w3-button w3-round w3-margin w3-orange w3-display-topleft"><i class="fa fa-caret-left"></i></span>
@@ -67,7 +70,7 @@
           <span>Nickname:</span><input type="text" id="joinNick" placeholder="Enter Nickname" class="w3-input w3-border">
           <span>Room Code:</span><input type="text" id="joinRoomCode" placeholder="Enter Roomcode" class="w3-input w3-border">
         </div>
-        <button class="w3-button w3-hover-blue w3-round-large w3-blue" id="joinRoom"><i class="fa fa-door"></i> Join Room</button>  
+        <button class="w3-button w3-block w3-hover-blue w3-round-large w3-blue" id="joinRoom"><i class="fa fa-door"></i> Join Room</button>  
       </div>
       <div id="pg4" class="w3-container w3-animate-fade pages" style="display:none">
         <span onclick="openPage('pg2')" class="w3-button w3-round w3-margin w3-orange w3-display-topleft"><i class="fa fa-caret-left"></i></span>
@@ -78,8 +81,8 @@
           <span>Room Code:</span><input type="text" id="newRoomCode" class="w3-input w3-border" readonly>
         </div>  
         <div class="w3-row">
-          <button class="w3-button w3-hover-blue w3-round w3-blue" id="genRoomCode"><i class="fa fa-plus"></i> Generate Code</button>
-          <button class="w3-button w3-hover-blue w3-round w3-blue" id="copyCode"><i class="fa fa-copy"></i> Copy Code</button>  
+          <button class="w3-button w3-half w3-hover-blue w3-round w3-blue" id="genRoomCode"><i class="fa fa-plus"></i> Generate Code</button>
+          <button class="w3-button w3-half w3-hover-blue w3-round w3-blue" id="copyCode"><i class="fa fa-copy"></i> Copy Code</button>  
         </div>
 
       </div>
