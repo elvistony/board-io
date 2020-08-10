@@ -11,7 +11,7 @@ module.exports = {
   },
   target: 'web',
 
-  mode:'development',
+  mode:'production',
   optimization: {
     splitChunks:{
       cacheGroups:{

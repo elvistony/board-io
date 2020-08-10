@@ -239,20 +239,19 @@ function addPeerBrush(peer_id) {
 
 let my_coord = {x:0 , y:0};
 var peerBrush={} 
-/* 
-{
-    'abc':true //brush down 
 
-}
-*/
+var my_brush=false 
 
 window.addEventListener('load', ()=>{
     resize(); // Resizes the canvas once the window loads
     canvas.addEventListener('mousedown', startPainting);
     canvas.addEventListener('mouseup', stopPainting);
+    canvas.addEventListener('touchstart',startPainting)
+    canvas.addEventListener('touchend',stopMobilePainting)
     canvas.addEventListener('mousemove', myStrokes);
     canvas.addEventListener("touchmove", function (e) {
       var touch = e.touches[0];
+      my_brush=true
       var mouseEvent = new MouseEvent("mousemove", {
         clientX: touch.clientX,
         clientY: touch.clientY
@@ -272,11 +271,10 @@ function addPeer(id) {
 }
 
 
-var my_brush=false 
+
 
 function getPosition(event){
     var rect  = ctx.canvas.getBoundingClientRect();
-    my_prev=my_coord
     my_coord.x=event.clientX - rect.left
     my_coord.y=event.clientY - rect.top
   }
@@ -284,6 +282,8 @@ function getPosition(event){
 
 function startPainting(event) {
     getPosition(event)
+    event.preventDefault();
+    event.stopPropagation();
     my_brush=true
     if(!solo){
         SendBrushUpdate(my_brush)
@@ -298,18 +298,23 @@ function stopPainting(event) {
     }
 }
 
-var my_prev={}
+function stopMobilePainting(event) {
+    if(!solo){
+        SendBrushUpdate(my_brush)
+    }
+}
 
 function myStrokes(event) {
-    //my_prev = my_coord
+    event.preventDefault();
+    event.stopPropagation();
     if(my_brush){
-        drawStroke(2,'round','blue',my_prev,my_coord,ctx)
+        drawMyStroke(2,'round','blue',event)
+        if(!solo){
+            //send strokes too
+            SendMoves()
+        }
     }
-    getPosition(event)
-    if(!solo){
-        //send strokes too
-        SendMoves()
-    }
+    
 }
 
 function SendBrushUpdate(now){
@@ -331,6 +336,16 @@ function SendMoves() {
 
 
 
+function drawMyStroke(lW,lC,sS,event){
+    ctx.beginPath();
+    ctx.lineWidth = lW
+    ctx.lineCap = lC;
+    ctx.strokeStyle = sS;
+    ctx.moveTo(my_coord.x, my_coord.y);
+    getPosition(event);
+    ctx.lineTo(my_coord.x , my_coord.y);
+    ctx.stroke();
+  }
 
 
 function drawStroke(lW,lC,sS,from,to,cctx){
