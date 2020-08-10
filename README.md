@@ -7,6 +7,7 @@
 - No Server Required
 
 ### Known Issues
+- Make Standard Canvas sizes for all devices
 - Resizing window, clears the page strokes.
 
 ### Demo
