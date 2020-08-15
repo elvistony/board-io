@@ -38,9 +38,34 @@ document.getElementById('copyCode').addEventListener('click',copyCode)
 document.getElementById('clearAll').addEventListener('click',function(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);   
 })
-document.getElementById('tipSize').addEventListener('change',function(){
-    setBrushThick(this.value)
+// document.getElementById('tipSize').addEventListener('change',function(){
+//     setBrushThick(this.value)
+// })
+
+var tip = document.getElementById('tip')
+
+
+document.getElementById('tipUp').addEventListener('click',function(){
+    setBrushThick(BrushTipSize)
+    BrushSize(1)
 })
+
+var BrushTipSize = 1
+tip.style.fontSize =5
+
+document.getElementById('tipDown').addEventListener('click',function(){
+    BrushSize(-1)
+    setBrushThick(BrushTipSize)
+})
+
+
+
+function BrushSize(v){
+    BrushTipSize = BrushTipSize-v;
+    tip.style.fontSize=2+BrushTipSize;
+}
+
+
 
 
 // Primary Functions
@@ -324,8 +349,10 @@ window.addEventListener('load', ()=>{
     window.addEventListener('resize', resize);
 });
 
+ctx.canvas.width = window.innerWidth;
+
 function resize(){
-    ctx.canvas.width = window.innerWidth;
+    // ctx.canvas.width = window.innerWidth;
 }
 
 function addPeer(id) {
