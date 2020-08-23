@@ -5,68 +5,46 @@ var room= 'homeroom'
 var username= 'Anu'
 var peers = {}
 
-var IntroModal = document.getElementById('intro-modal')
+
+//Initializing DOM Elements
 var playerDiv = document.getElementById('players')
-var solo=true
+var tip =       document.getElementById('tip')
 
-IntroModal.style.display='block'
-
-var Debug=true;
-
-window.onbeforeunload = function(event) {
-    event.returnValue = "Your Board will be Cleared if you Reload, Continue?";
-};
-
-//----------------------------------------------Checking if Site is First Launch
-// var unique_id = getCookie('unique_id')
-// if(unique_id==""){
-//     dlog("First Launch - Generating ID")
-//     var new_id =  rs.generate(10)
-//     unique_id=new_id;
-//     setCookie('unique_id',new_id, 7)
-//     dlog("Unique ID = "+new_id)
-// }else{
-//     alert('Welcome Back '+unique_id)
-//     dlog("Unique ID already Exists : "+unique_id)
-// }
-
+document.getElementById('intro-modal').style.display='block';
 document.getElementById('joinRoom').addEventListener('click',joinRoom)
 document.getElementById('genRoomCode').addEventListener('click',NewRoom)
 document.getElementById('ModalOpen').addEventListener('click',openModal)
 document.getElementById('copyCode').addEventListener('click',copyCode)
-
 document.getElementById('clearAll').addEventListener('click',function(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);   
 })
-// document.getElementById('tipSize').addEventListener('change',function(){
-//     setBrushThick(this.value)
-// })
-
-var tip = document.getElementById('tip')
-
-
 document.getElementById('tipUp').addEventListener('click',function(){
     setBrushThick(BrushTipSize)
     BrushSize(1)
 })
-
-var BrushTipSize = 1
-tip.style.fontSize =5
-
 document.getElementById('tipDown').addEventListener('click',function(){
     BrushSize(-1)
     setBrushThick(BrushTipSize)
 })
 
+window.onbeforeunload = function(event) {
+    event.returnValue = "Your Board will be Cleared if you Reload, Continue?";
+};
 
 
-function BrushSize(v){
-    BrushTipSize = BrushTipSize-v;
-    tip.style.fontSize=2+BrushTipSize;
-}
+// Variable Settings
+var solo=true;
+var Debug=false;
+var members={}
 
 
+//Brush settings
+var BrushTipSize = 1
+tip.style.fontSize =5
 
+/*
+Connection Establishment Functions----------------------------
+*/
 
 // Primary Functions
 function NewRoom() {
@@ -118,36 +96,7 @@ function joinRoom(){
     IntroModal.style.display='none';
 }
 
-//----------------------------------------------
 
-// //Loading The URL Hash
-// var hashcode = window.location.hash
-// if(hashcode.length<=1){
-//     dlog("General Mode - Showing both Options")
-//     //General Mode - No hash - showing Both options
-//     hostDiv.style.display='block'
-//     jointDiv.style.display='block'
-// }else if(hashcode.substring(1,5)=="host"){
-//     var pre_session_id = getCookie('active_room_id')
-//     if(pre_session_id!=""){
-//     dlog("Host Mode - Prev Session present")
-//     // Host mode with Prev Session
-//     //send the sorry-ticket and generate a new one and send to peers
-//     //Check Cookies
-//     }else{
-//     dlog("Host Mode - Showing New Room Form")
-//     // Host mode - New Session
-//     hostDiv.style.display='block'
-//     //Show New Meet Creation Form
-//     }
-// }else{
-//     // Join Mode
-//     dlog("Peer Mode - Showing Peer form")
-//     jointDiv.style.display='block'
-//     room.value = hashcode.substring(1,hashcode.length)
-// }
-
-var members={}
 
 function joinChat () {
     var uname = username
@@ -241,17 +190,10 @@ function listen () {
             }else{
                 console.log(msg);
             }
-            
         }
     })
-
-
     p2pt.start()
 }
-
-
-
-//------------------------------------------------------------------------
 
 function dlog(msg) {
     if(Debug){
@@ -259,43 +201,23 @@ function dlog(msg) {
     }
 }
 
-// function setCookie(cname, cvalue, exdays) {
-//     var d = new Date();
-//     d.setTime(d.getTime() + (exdays*24*60*60*1000));
-//     var expires = "expires="+ d.toUTCString();
-//     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-// }
-
-// function getCookie(cname) {
-//     var name = cname + "=";
-//     var decodedCookie = decodeURIComponent(document.cookie);
-//     var ca = decodedCookie.split(';');
-//     for(var i = 0; i < ca.length; i++) {
-//     var c = ca[i];
-//     while (c.charAt(0) == ' ') {
-//         c = c.substring(1);
-//     }
-//     if (c.indexOf(name) == 0) {
-//         return c.substring(name.length, c.length);
-//     }
-//     }
-//     return "";
-// }
-
-
-//Draw.js ---- Expansion
+//Brush Related Functions
 
 var my_brushColor = 'blue'
 var my_brushThickness = 2
 
+function BrushSize(v){
+    BrushTipSize = BrushTipSize-v;
+    tip.style.fontSize=2+BrushTipSize;
+}
+
 function setBrushColor(color) {
     my_brushColor=color
+    //If Multi-player - send Brush Change to Peer
     if(!solo){
         SendMyBrushChange()
     }
 }
-
-
 
 function setBrushThick(me) {
     my_brushThickness=me
@@ -311,11 +233,23 @@ function SendMyBrushChange() {
 }
 
 
-canvas = document.getElementById('canvas');
-ctx = canvas.getContext('2d');
-peerCTXs = {}
-peerBrushProps = {}
+//Canvas Related Functions
 
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+//Peer Canvas Control Elements
+var peerCTXs = {}
+var peerBrushProps = {}
+let my_coord = {x:0 , y:0};
+var peerBrush={} 
+var my_brush=false 
+
+
+//Add a New Peer to the Board
+function addPeer(id) {
+    addPeerBrush(id)
+    playerDiv.innerHTML+=`<span class="w3-text-orange" id="`+id+`"> &#9679; `+members[id]+`</span>`
+}
 function addPeerBrush(peer_id) {
     peerCTXs[peer_id]=canvas.getContext('2d');
     peerBrushProps[peer_id]={
@@ -325,10 +259,8 @@ function addPeerBrush(peer_id) {
 }
 
 
-let my_coord = {x:0 , y:0};
-var peerBrush={} 
 
-var my_brush=false 
+//Canvas Drawing Listeners
 
 window.addEventListener('load', ()=>{
     resize(); // Resizes the canvas once the window loads
@@ -349,19 +281,12 @@ window.addEventListener('load', ()=>{
     window.addEventListener('resize', resize);
 });
 
+
+//TODO: - Fix the Canvas Resize Clear issue!
 ctx.canvas.width = window.innerWidth;
-
 function resize(){
-    // ctx.canvas.width = window.innerWidth;
+    //ctx.canvas.width = window.innerWidth;
 }
-
-function addPeer(id) {
-    addPeerBrush(id)
-    playerDiv.innerHTML+=`<span class="w3-text-orange" id="`+id+`"> &#9679; `+members[id]+`</span>`
-}
-
-
-
 
 function getPosition(event){
     var rect  = ctx.canvas.getBoundingClientRect();
@@ -400,7 +325,6 @@ function myStrokes(event) {
     if(my_brush){
         drawMyStroke(my_brushThickness,'round',my_brushColor,event)
         if(!solo){
-            //send strokes too
             SendMoves()
         }
     }
@@ -448,7 +372,9 @@ function drawStroke(lW,lC,sS,from,to,cctx){
     cctx.stroke();
   }
 
-//Recieving Data--------------------------------------
+
+//Getting Peer Strokes and Brush Changes
+
 function DrawPeerStrokes(id,msg) {
     if(peerBrush[id]){
         drawStroke(peerBrushProps[id]['thick'],'round',peerBrushProps[id]['color'],peerBrush[id],msg,peerCTXs[id])
