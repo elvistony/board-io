@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw-Board-v2</title>
+  <link rel="stylesheet" href="https://startbootstrap.github.io/startbootstrap-stylish-portfolio/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://startbootstrap.github.io/startbootstrap-stylish-portfolio/vendor/fontawesome-free/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://startbootstrap.github.io/startbootstrap-stylish-portfolio/vendor/simple-line-icons/css/simple-line-icons.css">
+
+  <link rel="stylesheet" href="css/portfolio.css">
+  <style>
+    .board-container{
+        height: auto;
+        margin: auto;
+        overflow-x:auto;
+        overflow-y: auto;
+    }
+    .canvas-io{
+      background: white;
+      touch-action: none;
+      border: 0.5px solid lightgray;
+      border-radius: 10px;
+    }
+    /* Let's get this party started */
+    ::-webkit-scrollbar {
+      width: 20px;
+      height: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background: rgb(50, 53, 255); 
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    }
+    ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(70, 56, 255, 0.884); 
+    }
+  </style>
+</head>
+<body style="">
+<!-- Navigation -->
+
+  <div class="btn-group-fab" role="group" aria-label="FAB Menu">
+    <div>
+      <button type="button"  class="btn btn-main has-tooltip" data-placement="left" title="Menu"> <i class="fa fa-bars"></i> </button>
+      <button type="button" class="btn btn-sub btn-info has-tooltip" data-placement="left" title="Pen" id="menu_pen"> <i class="fa fa-pen"></i> </button>
+      <button type="button" class="btn btn-sub btn-info has-tooltip" data-placement="left" title="Eraser" id="menu_eraser"> <i class="fa fa-eraser"></i> </button>
+      <button type="button" class="btn btn-sub btn-info has-tooltip" data-placement="left" title="Pointer" id="menu_pointer"> <i class="fa fa-mouse-pointer"></i> </button>
+      <button type="button" class="btn btn-stat btn-white has-tooltip" data-placement="left" title="Redo" id="menu_redo" onclick="Redo()"> <i class="fa fa-redo"></i> </button>
+      <button type="button" class="btn btn-stat btn-white has-tooltip" data-placement="left" title="Undo" id="menu_undo" onclick="Undo()"> <i class="fa fa-undo"></i> </button>
+      
+      <div class="dropdown">
+        <button type="button" id="dropdownMenuButton" style="background: #155d74;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sub btn-color text-white has-tooltip" data-placement="left" title="Color Pallette"></button>
+        <div class="dropdown-menu text-center" style="background-color: transparent;border: none;width: max-content;" aria-labelledby="dropdownMenuButton">
+          <button title="#1d809f" class="pallette-color"></button>
+          <button title="#16A085" class="pallette-color" onclick="setBrushColor(this)"></button>
+          <button title="#7D3C98" class="pallette-color" onclick="setBrushColor(this)"></button>
+          <button title="#E74C3C" class="pallette-color" onclick="setBrushColor(this)"></button>
+          <button title="#F39C12" class="pallette-color" onclick="setBrushColor(this)"></button>
+          <button title="#D35400" class="pallette-color" onclick="setBrushColor(this)"></button>
+          <button title="#BDC3C7" class="pallette-color" onclick="setBrushColor(this)"></button>
+          <button title="#2C3E50" class="pallette-color" onclick="setBrushColor(this)"></button>
+        </div>
+      </div>
+      
+
+      <div class="dropdown">
+        <button type="button" id="settingDropToggle" style="background: #0a3746;" class="btn btn-drop text-white has-tooltip" data-toggle="dropdown" data-placement="left" title="Save"> <i class="fa fa-cog"></i> </button>
+        <div class="dropdown-menu" style="background-color: transparent;border: none;;width: max-content;" aria-labelledby="settingDropToggle">
+          <button type="button" class="set-button btn-danger"  title="Download" onclick="ClearCanvas()"> <i class="fa fa-trash"></i> </button>
+          <button type="button" class="set-button btn-info"  onclick="toggleFullscreen()" title="Fullscreen"> <i class="fa fa-arrows-alt"></i> </button>
+          <button type="button" class="set-button btn-warning"  title="Live Draw" data-toggle="modal" data-target="#exampleModalCenter"> <i class="fa fa-link" ></i> </button>
+          <button type="button" class="set-button btn-primary"  title="Download"> <i class="fa fa-download"></i> </button>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="text-center" style="background-color: #f2f3f3; max-width: min-content;">
+    <div class="p-3" style="overflow: hidden; margin: auto; max-width: min-content;">
+        <div class="board-container">
+          <canvas id="canvas" class="canvas-io" width="1200" height="600"></canvas>
+        </div>
+        <img src="img/logo.svg" alt="Board-IO" style="position: fixed;bottom: 2%;right: 2%;width: 100px;" >
+    </div>
+  </header>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Share Board</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Share Board to Peers?
+        <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="customSwitches">
+          <label class="custom-control-label" for="customSwitches">Peer Sharing</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Go Live</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <script src="https://startbootstrap.github.io/startbootstrap-stylish-portfolio/vendor/jquery/jquery.min.js"></script>
+  <script src="https://startbootstrap.github.io/startbootstrap-stylish-portfolio/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://startbootstrap.github.io/startbootstrap-stylish-portfolio/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/commons.js"></script>
+  <script src="js/canvas.js"></script>
+</body>
+</html>
