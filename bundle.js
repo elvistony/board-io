@@ -305,6 +305,15 @@
   //--------Peer Connectivity
   
   function JoinRoom(room){
+    var img = new Image()
+    code = encodeURIComponent("https://elvistony.github.io/board-io/#"+room);
+    img.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data="+code;
+    img.classList.add("img")
+    img.classList.add("m-3")
+    img.classList.add("rounded")
+    img.onload = function (){
+      document.getElementById('qrcode').appendChild(img)
+    }
       console.log('Joining Room:',room)
       init (room) 
   }

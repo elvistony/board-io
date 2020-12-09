@@ -139,13 +139,17 @@
         </div>
         <div id="card-choose-create" style="display: none;" class="text-center">
           <p>Create a Room</p>
+          
           <div class="input-group mb-3">
             <input type="text" name="join-room-code" readonly class="form-control text-center text-primary" placeholder="Click Generate to Create a Room">
             <div class="input-group-append">
               <button class="btn btn-outline-success" id="btn-create-room" type="button">Generate</button>
-              <button class="btn btn-outline-success" style="display: none;" onclick="SendCode()" id="btn-share-room" type="button">Share Room Code</button>
+              <button class="btn btn-outline-success" style="display: none;" onclick="SendCode()" id="btn-share-room" type="button">Share to WhatsApp</button>
             </div>
           </div>
+        </div>
+        <div id="qrcode">
+          <!-- QR-CODE Comes here -->
         </div>
       </div>
     </div>

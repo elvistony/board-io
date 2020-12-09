@@ -39,7 +39,20 @@ $(function() {
   $('has-tooltip').tooltip();
 });
 
-function RandomCoder(){return "boardio";}
+function RandomCoder(){
+  randomvalue = "boardio";
+  // var img = new Image()
+  // code = encodeURIComponent("https://elvistony.github.io/board-io/#"+randomvalue);
+  // img.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data="+code;
+  // img.classList.add("img")
+  // img.classList.add("m-3")
+  // img.classList.add("rounded")
+  // img.onload = function (){
+  //   document.getElementById('qrcode').appendChild(img)
+  // }
+  return randomvalue ;
+
+}
 
 
 document.getElementById("btn-choose-join").addEventListener('click',()=>{ShareModal(1)});
@@ -63,7 +76,7 @@ function RandomColor(){
 
 function SendCode(){
   var code = document.getElementsByName("join-room-code")[1];
-  window.open("whatsapp://send?text=Join Me on Board-IO - https://elvistony.github.io/board-io/#"+code)
+  window.open("whatsapp://send?text=Join Me on Board-IO - https://elvistony.github.io/board-io/#"+code.value)
 }
 
 window.onload = () =>{
