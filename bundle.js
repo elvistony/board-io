@@ -271,6 +271,8 @@
       redo_array=[]
   }
   
+  
+
   function Undo(){
       PushToRedo(canvas.toDataURL());
       if(undo_array.length<=0){return}
@@ -282,7 +284,7 @@
       };
       PushToRedo(img.src);
   }
-  
+
   function Redo(){
       PushToUndo(canvas.toDataURL())
       if(redo_array.length<=0){return}
