@@ -40,7 +40,7 @@ $(function() {
 });
 
 function RandomCoder(){
-  randomvalue = "boardio";
+  randomvalue = (""+Math.random()).substring(2,7);
   // var img = new Image()
   // code = encodeURIComponent("https://elvistony.github.io/board-io/#"+randomvalue);
   // img.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data="+code;
