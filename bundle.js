@@ -354,7 +354,10 @@
   function init (room) {
       let announceURLs = [
       "wss://tracker.sloppyta.co:443/announce",
-      "wss://tracker.novage.com.ua:443/announce"
+      "wss://tracker.novage.com.ua:443/announce",
+      "wss://tracker.openwebtorrent.com",
+      "wss://tracker.webtorrent.io",
+      "wss://tracker.btorrent.xyz"
       ]
       p2pt = new P2PT(announceURLs, 'boardio'+room)
       listen ();
