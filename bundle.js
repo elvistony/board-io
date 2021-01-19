@@ -271,7 +271,15 @@
       redo_array=[]
   }
   
-  
+  function KeyPress(e) {
+    var evtobj = window.event? event : e
+    if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
+      Undo();
+      console.log("Shortcut Undo");
+    }
+}
+
+document.onkeydown = KeyPress;
 
   function Undo(){
       PushToRedo(canvas.toDataURL());
@@ -282,7 +290,7 @@
       img.onload = function(){
           me.ctx.drawImage(img,0,0); // Or at whatever offset you like
       };
-      PushToRedo(img.src);
+      //PushToRedo(img.src);
   }
 
   function Redo(){
@@ -294,7 +302,7 @@
       img.onload = function(){
           me.ctx.drawImage(img,0,0); // Or at whatever offset you like
       };
-      PushToUndo(img.src)
+      //PushToUndo(img.src)
   }
   
   
