@@ -205,13 +205,49 @@
       BroadCast('ptr-mode',me.id,[me.mode,me.brush_color])
   }
   
+  // Downloading as Image
   var DownloadCanvas = function(){
       var link = document.createElement('a');
-      link.download = 'filename.png';
+      link.download = 'drawboard.png';
       link.href = canvas.toDataURL()
       link.click();
     }
-      
+  
+
+    // Saving Locally to File
+    $(window).bind('keydown', function(event) {
+      if (event.ctrlKey || event.metaKey) {
+          switch (String.fromCharCode(event.which).toLowerCase()) {
+          case 's':
+              event.preventDefault();
+              // alert('ctrl-s');
+              saveFile();
+            }
+        }
+    });
+
+  
+  async function saveFile() {
+    const options = {
+      types: [
+        {
+          description: 'Draw Board Files',
+          accept: {
+            'image/board': ['.board'],
+          },
+        },
+      ],
+    };
+    const handle = await window.showSaveFilePicker(options);
+    writeFile(handle,canvas.toDataURL("image/png"))
+    return handle;
+  }
+  
+  async function writeFile(fileHandle, contents) {
+      const writable = await fileHandle.createWritable();
+      await writable.write(contents);
+      await writable.close();
+  }
   
   function sketch(who) {
       
