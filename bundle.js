@@ -10,9 +10,11 @@
   document.getElementById('menu_pointer').addEventListener('click',()=>{setMode(3)});
   document.getElementById('menu_undo').addEventListener('click',()=>{Undo()});
   document.getElementById('menu_redo').addEventListener('click',()=>{Redo()});
-  document.getElementById('btn-download').addEventListener('click',()=>{DownloadCanvas();});
+  document.getElementById('btn-export').addEventListener('click',()=>{DownloadCanvas();});
   document.getElementById('btn-clear').addEventListener('click',()=>{ClearCanvas();});
   document.getElementById('btn-set-name').addEventListener('click',()=>{SetNickname();});
+  document.getElementById('btn-open').addEventListener('click',()=>{OpenLocalFile();});
+  document.getElementById('btn-download').addEventListener('click',()=>{saveFile();});
   
   colors.forEach(element => { element.addEventListener('click',(e)=>{setBrushColor(e.toElement)})});
   
@@ -41,7 +43,7 @@
     });
   
   
-  
+  var fileHandle= false;
   var p2pt = false;
   var HomeRoom=""
   var undo_array = []
@@ -202,6 +204,7 @@
   function setBrushColor(ele){
       me.brush_color = ele.title;
       document.getElementById('dropdownMenuButton').style.background = ele.title;
+      setMode(1)
       BroadCast('ptr-mode',me.id,[me.mode,me.brush_color])
   }
   
@@ -238,13 +241,66 @@
         },
       ],
     };
-    const handle = await window.showSaveFilePicker(options);
-    writeFile(handle,canvas.toDataURL("image/png"))
-    return handle;
+    if(!fileHandle){
+      const handle = await window.showSaveFilePicker(options);
+      writeFile(handle,canvas.toDataURL("image/png"))
+    }else{
+      writeFile(fileHandle,canvas.toDataURL("image/png"))
+    }
+    // return handle;
+  }
+
+  async function LoadBoard(){
+    const options = {
+      types: [
+        {
+          description: 'Draw Board Files',
+          accept: {
+            'image/board': ['.board'],
+          },
+        },
+      ],
+    };
+   
+    [handle] = await window.showOpenFilePicker(options);
+      var fileData = await handle.getFile();
+      if(confirm("Load Board from File?")){
+        CanvasFromURL(fileData.name)
+      }
+  }
+
+  function OpenLocalFile(){
+    var file = document.getElementById('btn-input-file')
+    file.click();
+    file.addEventListener('change', readSingleFile)
+  }
+
+  async function readSingleFile(e) {
+    var file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var contents = e.target.result;
+      CanvasFromURL(contents)
+    };
+    reader.readAsText(file);
+  }
+
+  async function CanvasFromURL(data){
+    console.log(data)
+    var ctx = me.ctx;
+    var img = new Image;
+    img.onload = function(){
+      ctx.drawImage(img,0,0);
+    };
+    img.src = data;
   }
   
-  async function writeFile(fileHandle, contents) {
-      const writable = await fileHandle.createWritable();
+  async function writeFile(fHandle, contents) {
+      fileHandle=fHandle
+      const writable = await fHandle.createWritable();
       await writable.write(contents);
       await writable.close();
   }
@@ -312,6 +368,9 @@
     if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
       Undo();
       console.log("Shortcut Undo");
+    }else if (evtobj.keyCode == 89 && evtobj.ctrlKey) {
+      Redo();
+      console.log("Shortcut Undo");
     }
 }
 
@@ -340,7 +399,6 @@ document.onkeydown = KeyPress;
       };
       //PushToUndo(img.src)
   }
-  
   
   function ClearCanvas(){
       me.ctx.clearRect(0, 0, canvas.width, canvas.height);
