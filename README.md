@@ -1,6 +1,7 @@
 # Board-IO
 #### Under Development
 ### A simple Drawing board that can be shared with peers
+### Uses P2P connections to share live strokes to peers on the same network
 
 ### Features
 - Super Simple connection *
