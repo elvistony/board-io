@@ -1,5 +1,7 @@
-# Board-IO
-#### Under Development
+# Board-IO (beta)
+
+![Demo Image](board-io.png)
+
 ### A simple Drawing board that can be shared with peers
 ### Uses P2P connections to share live strokes to peers on the same network
 
