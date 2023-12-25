@@ -460,6 +460,8 @@ document.onkeydown = KeyPress;
       "wss://tracker.openwebtorrent.com",
       "wss://tracker.webtorrent.io",
       "wss://tracker.btorrent.xyz",
+      // "wss://tracker.novage.com.ua",
+      "wss://tracker.files.fm:7073/announce",
       // "wss://tracker.openwebtorrent.com",
       // "wss://tracker.btorrent.xyz",
       // "wss://tracker.fastcast.nz"
